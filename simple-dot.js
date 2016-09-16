@@ -6,8 +6,9 @@ var vertexShader = "attribute vec4 a_Position;"+
 "}";
 
 var fragmentShader = "precision mediump float;"+
+"uniform vec4 u_Color;" +
 "void main(){"+
-  "gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);"+
+  "gl_FragColor = u_Color;"+
 "}";
 
 
@@ -28,18 +29,37 @@ window.onload = function(){
   // grab a reference to the position attribute
   var a_Position = gl.getAttribLocation(program, "a_Position");
 
+  var u_Color = gl.getUniformLocation(program, "u_Color");
+
+  var data = new Float32Array([
+    0.0, 0.5,
+    0.0, -0.5,
+    -0.5, 0.0
+  ]);
+
+  var buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+
 
   // set the background or clear color
   gl.clearColor(1.0, 1.0, 1.0, 1.0);
 
-
+  gl.uniform4f(u_Color, 0.0, 1.0, 0.3, 1.0);
 
   // clear the context for new content
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   // set the position
-  gl.vertexAttrib2f(a_Position,0.0, 0.0);
+  //gl.vertexAttrib2f(a_Position,0.0, 0.5);
+
+  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(a_Position);
+
 
   // tell the GPU to draw the point
-  gl.drawArrays(gl.POINTS, 0, 1);
+  gl.drawArrays(gl.POINTS, 0, 3);
+
+
+
 };
