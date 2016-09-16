@@ -31,12 +31,14 @@ window.onload = function(){
 
   var u_Color = gl.getUniformLocation(program, "u_Color");
 
+  // create the points
   var data = new Float32Array([
     0.0, 0.5,
     0.0, -0.5,
     -0.5, 0.0
   ]);
 
+  // make a buffer a push the points into it
   var buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
