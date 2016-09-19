@@ -36,9 +36,9 @@ window.onload = function(){
 
   // create the points
   var data = new Float32Array([
-    0.0, 0.75,
-    0.0, -0.75,
-    -0.75, 0.0
+    0.0, 0.75,    1.0, 0.0, 0.0,
+    0.0, -0.75,   0.0, 1.0, 0.0,
+    -0.75, 0.0,   0.0, 0.0, 1.0
   ]);
 
   // make a buffer a push the points into it
@@ -46,22 +46,13 @@ window.onload = function(){
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
 
+  var FSIZE = data.BYTES_PER_ELEMENT;
 
-  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 5 * FSIZE, 0);
   gl.enableVertexAttribArray(a_Position);
 
-    // create the points
-  var colorData = new Float32Array([
-    1.0, 0.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 0.0, 1.0
-  ]);
-
-  // make a buffer a push the points into it
-  var colorbuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, colorbuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, colorData, gl.STATIC_DRAW);
-
+  gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, 5 * FSIZE, 2 * FSIZE);
+  gl.enableVertexAttribArray(a_Color);
 
 
   // set the background or clear color
@@ -76,11 +67,8 @@ window.onload = function(){
   //gl.vertexAttrib2f(a_Position,0.0, 0.5);
 
 
-  gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(a_Color);
-
   // tell the GPU to draw the point
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  gl.drawArrays(gl.LINE_LOOP, 0, 3);
 
 
 
